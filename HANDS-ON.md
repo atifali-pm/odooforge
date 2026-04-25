@@ -15,7 +15,7 @@ Do not put screenshots in `/docs/`, `/public/`, or the README. `/screenshots/` i
 These were settled in the portfolio session on 2026-04-25. Treat them as fixed inputs, not open questions.
 
 1. **Ports.** Odoo on `8069`, Postgres on `5465`. Ollama is not in the default stack. Verified clear against running Docker stacks (zarpay 5450, n8n 5451, learnloop 5455, tracklane 5460) and host `ss -tlnp`.
-2. **Odoo version is 19.** Current stable as of April 2026 (shipped Oct 2025). Do not start on 17 or 18. Odoo 20 ships Sept 2026 mid-build; we do not chase it.
+2. **Odoo version is 18 Community.** Pivoted from 19 on 2026-04-25 because OCA `helpdesk_mgmt` has no 19.0 branch yet (only through 18.0). The full OCA addon ecosystem on 18 outweighs running on the latest core. Not chasing 19 or 20.
 3. **Default LLM provider is Groq.** Free tier, no API key cost. Anthropic Claude is supported through the same adapter when a key is provided. Ollama is supported for self-hosted use. The user-facing setting in Odoo picks the active provider.
 4. **Demo subdomain is deferred to Phase 6.** Default to a no-cost option (DuckDNS, sslip.io, or Cloudflare Tunnel pointing to the Oracle Cloud Always Free VM). No paid TLD.
 5. **License is MIT.** Repo is public at `github.com/atifali-pm/odooforge`.
@@ -27,7 +27,7 @@ Before starting Phase 1, confirm:
 
 - [ ] Docker and docker compose v2 are installed and the daemon is running
 - [ ] Ports 8069 and 5465 are free on the host (`ss -tlnp | grep -E ':8069|:5465'` returns nothing)
-- [ ] At least 8 GB of free RAM (Odoo 19 boots heavier than 17)
+- [ ] At least 8 GB of free RAM (Odoo 18 boots heavier than 17)
 - [ ] At least 10 GB of free disk
 - [ ] Terraform v1.7 or newer on PATH (needed from Phase 4 onward; Phase 1-3 are Docker-only)
 - [ ] A Groq account with a free-tier API key in `.env` (needed from Phase 2 onward)
@@ -39,8 +39,8 @@ Drop this verbatim into the next Claude session inside `/home/atif/projects/odoo
 
 ```
 Read HANDS-ON.md and the project memory at ~/.claude/projects/-home-atif-projects-odooforge/memory/.
-Confirm the locked decisions block (ports 8069 + 5465, Odoo 19, Groq default, demo deferred to Phase 6).
-Then start Phase 1: scaffold a docker-compose stack with Odoo 19 + Postgres 16 + pgvector, wire a single Odoo database, and seed it with the Helpdesk module enabled.
+Confirm the locked decisions block (ports 8069 + 5465, Odoo 18, Groq default, demo deferred to Phase 6).
+Then start Phase 1: scaffold a docker-compose stack with Odoo 18 + Postgres 16 + pgvector, wire a single Odoo database, vendor OCA helpdesk_mgmt 18.0 into ./addons/, and install it.
 The success criterion is: `docker compose up -d` works, http://localhost:8069 loads, and the Helpdesk app is installed.
 Save a screenshot of the loaded Odoo UI to /screenshots/01-odoo-local-up.png when it works.
 Commit Phase 1 as one commit. Do not start Phase 2 in the same commit.
@@ -50,15 +50,15 @@ Commit Phase 1 as one commit. Do not start Phase 2 in the same commit.
 
 ### Phase 1: docker-compose foundation (~4h)
 
-- [ ] Create `docker-compose.yml` with `odoo:19` + `postgres:16` services
-- [ ] Pin Postgres image to a tag that includes pgvector, or build a thin Dockerfile that adds pgvector
+- [ ] Create `docker-compose.yml` with `odoo:18` + `pgvector/pgvector:pg16` services
 - [ ] Wire Odoo to Postgres on port 5465 host-side, 5432 container-side
 - [ ] Map Odoo to host port 8069
 - [ ] Mount `./addons` for custom modules and `./config/odoo.conf` for Odoo config
 - [ ] Create `.env.example` with `POSTGRES_PASSWORD`, `ADMIN_PASSWORD`, `ODOO_DB_NAME`
-- [ ] Write a `make up` / `make down` / `make logs` Makefile or a `bin/odooforge` shim
-- [ ] Verify Helpdesk app installs cleanly
-- [ ] Save `screenshots/01-odoo-local-up.png`
+- [ ] Write a `make up` / `make down` / `make logs` Makefile
+- [ ] Vendor OCA `helpdesk_mgmt` 18.0 into `./addons/helpdesk_mgmt`
+- [ ] Verify the Helpdesk app installs cleanly from the Apps menu
+- [ ] Save `screenshots/01-odoo-local-up.png` and `screenshots/02-helpdesk-installed.png`
 - [ ] Commit: `Phase 1: local docker-compose stack`
 
 ### Phase 2: addon scaffold + simple AI ticket action (~4h)
@@ -118,7 +118,7 @@ Commit Phase 1 as one commit. Do not start Phase 2 in the same commit.
 
 ## Known gotchas
 
-- **Odoo 19 is heavier than 17.** If the local stack is sluggish, increase Docker's RAM allocation. The Always Free Oracle VM at 24 GB RAM has plenty of headroom; a 4 GB laptop tier will struggle.
+- **Odoo memory footprint.** A loaded Odoo 18 worker plus Postgres comfortably fits in 4 GB but feels snappy at 8 GB+. The Always Free Oracle VM at 24 GB RAM has plenty of headroom; a 2 GB laptop will struggle.
 - **Odoo's ORM does not natively know pgvector.** Use raw SQL from the addon for vector inserts and similarity search. Document the pattern with comments in the search method so future readers see why it's raw SQL.
 - **Terraform multi-cloud discipline is the trap.** It's tempting to ship AWS-only and claim the stack is portable. Phase 5 must actually deploy on Azure or DigitalOcean before the project is presentable. Screenshots from a real second-cloud deploy are non-negotiable.
 - **Groq free-tier rate limits.** TPM caps will hit during demo traffic spikes. Cache KB retrieval embeddings, cache tool-call responses where it makes sense, and add a graceful "AI temporarily rate-limited, please try again" fallback on the ticket view.
