@@ -3,7 +3,7 @@ SHELL := /bin/bash
 
 DB_NAME ?= odooforge
 
-.PHONY: help up down restart logs ps shell psql init-db install-helpdesk update-helpdesk reset clean
+.PHONY: help up down restart logs ps shell psql init-db install-helpdesk update-helpdesk reset clean seed-demo screenshots
 
 help:
 	@echo "OdooForge local stack"
@@ -20,6 +20,8 @@ help:
 	@echo "  make update-helpdesk     Update helpdesk_mgmt module code"
 	@echo "  make reset               Drop the Odoo database and re-init"
 	@echo "  make clean               Stop the stack and remove all volumes (destroys data)"
+	@echo "  make seed-demo           Seed teams, customers, tickets, and run the AI agent"
+	@echo "  make screenshots         Capture all UI screenshots into ./screenshots/"
 
 up:
 	docker compose up -d
@@ -57,3 +59,9 @@ reset:
 
 clean:
 	docker compose down -v
+
+seed-demo:
+	python3 bin/seed-demo.py
+
+screenshots:
+	python3 bin/capture-screenshots.py
