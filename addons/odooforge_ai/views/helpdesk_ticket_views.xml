@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="helpdesk_ticket_view_form_inherit_ai" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.view.form.inherit.odooforge_ai</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header/field[@name='stage_id']" position="before">
+                <button name="action_ai_draft_reply"
+                        string="Draft AI Reply"
+                        type="object"
+                        class="btn-primary"
+                        icon="fa-magic"/>
+            </xpath>
+
+            <xpath expr="//page[@name='description']" position="after">
+                <page string="AI Draft Reply" name="ai_draft_reply">
+                    <field name="ai_draft_reply" widget="html"
+                           placeholder="Click 'Draft AI Reply' in the header to generate a draft."/>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_inherit_odooforge_ai" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.odooforge_ai</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="AI Support Agent"
+                     string="AI Support Agent"
+                     name="odooforge_ai"
+                     logo="/odooforge_ai/static/description/icon.png">
+                    <block title="LLM Provider"
+                           name="odooforge_ai_provider_block">
+                        <setting id="odooforge_ai_groq_api_key"
+                                 string="Groq API Key"
+                                 help="Free tier API key from console.groq.com">
+                            <field name="odooforge_ai_groq_api_key"
+                                   password="True"
+                                   placeholder="gsk_..."/>
+                        </setting>
+                        <setting id="odooforge_ai_groq_model"
+                                 string="Groq Model"
+                                 help="Model identifier from Groq's available models">
+                            <field name="odooforge_ai_groq_model"
+                                   placeholder="llama-3.3-70b-versatile"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

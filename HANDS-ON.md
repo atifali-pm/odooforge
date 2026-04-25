@@ -4,7 +4,7 @@ This is the kickoff guide for the next Claude session in `/home/atif/projects/od
 
 ## Screenshots
 
-When you hit a UI milestone (Odoo loads on local Docker, addon installs from Apps menu, "Draft reply" button works on a ticket, Terraform deploys to AWS, demo lives on Oracle Cloud), capture a screenshot and save it to `/screenshots/` at the repo root. Use descriptive filenames like `01-odoo-local-up.png`, `02-addon-installed.png`, `03-draft-reply-button.png`, `04-aws-deploy.png`, `05-oracle-live-demo.png`.
+When you hit a UI milestone (Odoo loads on local Docker, addon installs from Apps menu, "Draft reply" button works on a ticket, Terraform deploys to AWS, demo lives on Oracle Cloud), capture a screenshot and save it to `/screenshots/` at the repo root. Use descriptive filenames like `01-odoo-local-up.png`, `02-helpdesk-installed.png`, `03-odooforge-ai-installed.png`, `04-draft-reply-button.png`, `07-aws-deploy.png`, `10-oracle-live-demo.png`.
 
 The portfolio-maintainer agent at `~/projects/portfolio/.claude/agents/portfolio-maintainer.md` looks in this directory when deciding whether to promote the project to atifali.pages.dev. No screenshots = the project does not qualify.
 
@@ -68,7 +68,7 @@ Commit Phase 1 as one commit. Do not start Phase 2 in the same commit.
 - [ ] Add a "Draft AI reply" button to the Helpdesk ticket form view
 - [ ] Add a `groq_provider.py` that calls Groq's free-tier Llama 3 model
 - [ ] On click, send the ticket subject + body to Groq, write the reply to a draft field on the ticket
-- [ ] Save `screenshots/02-addon-installed.png` and `screenshots/03-draft-reply-button.png`
+- [ ] Save `screenshots/03-odooforge-ai-installed.png` and `screenshots/04-draft-reply-button.png`
 - [ ] Commit: `Phase 2: AI addon scaffold and Groq ticket action`
 
 ### Phase 3: full support agent with tool use + RAG + audit log (~8h)
@@ -80,7 +80,7 @@ Commit Phase 1 as one commit. Do not start Phase 2 in the same commit.
 - [ ] Add an `odooforge_ai.audit_log` model that captures provider, model, prompt, tools called, tokens, latency, and outcome
 - [ ] Add a backend list view for the audit log with filters
 - [ ] Add a provider abstraction so the same agent runs on Groq, Claude, or Ollama based on settings
-- [ ] Save `screenshots/04-agent-tool-call.png` and `screenshots/05-audit-log.png`
+- [ ] Save `screenshots/05-agent-tool-call.png` and `screenshots/06-audit-log.png`
 - [ ] Commit: `Phase 3: tool-using support agent with RAG and audit log`
 
 ### Phase 4: Terraform module for AWS (~6h)
@@ -91,7 +91,7 @@ Commit Phase 1 as one commit. Do not start Phase 2 in the same commit.
 - [ ] Add `bin/odooforge up --target=aws` shim that wraps `terraform apply`
 - [ ] Add backup script: pg_dump + filestore rsync to S3
 - [ ] Verify a clean deploy on a brand-new AWS account
-- [ ] Save `screenshots/06-aws-deploy.png`
+- [ ] Save `screenshots/07-aws-deploy.png`
 - [ ] Commit: `Phase 4: AWS Terraform module + deploy CLI`
 
 ### Phase 5: Azure + DigitalOcean modules (~4h)
@@ -100,7 +100,7 @@ Commit Phase 1 as one commit. Do not start Phase 2 in the same commit.
 - [ ] Create `terraform/digitalocean/` mirroring the AWS interface (Droplet + reserved IP + firewall)
 - [ ] Verify `--target=azure` and `--target=do` both produce a working Odoo URL
 - [ ] Document the portable interface in `terraform/README.md`
-- [ ] Save `screenshots/07-azure-deploy.png` and `screenshots/08-do-deploy.png`
+- [ ] Save `screenshots/08-azure-deploy.png` and `screenshots/09-do-deploy.png`
 - [ ] Commit: `Phase 5: Azure and DigitalOcean modules`
 
 ### Phase 6: Oracle Cloud Always Free demo + polish (~4h)
@@ -112,7 +112,7 @@ Commit Phase 1 as one commit. Do not start Phase 2 in the same commit.
 - [ ] Seed the demo with realistic KB articles and a few sample tickets
 - [ ] Record a 5-minute Loom walking through the agent flow
 - [ ] Update README with the live demo URL and Loom link
-- [ ] Save `screenshots/09-oracle-live-demo.png`
+- [ ] Save `screenshots/10-oracle-live-demo.png`
 - [ ] Commit: `Phase 6: live demo and walkthrough`
 - [ ] Run `@portfolio-maintainer dry-run` from the portfolio session
 
