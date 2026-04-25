@@ -34,9 +34,9 @@ Owners and operators of small ERPs who want Odoo on their own cloud, not someone
 
 | Phase | Scope | Status |
 |---|---|---|
-| 1 | docker-compose foundation: Odoo 19 + Postgres 16 + pgvector, seed data | Scaffolded |
-| 2 | Custom addon scaffold + simple "Draft reply" ticket action using Groq | Pending |
-| 3 | Full support agent with tool use + pgvector RAG + audit log | Pending |
+| 1 | docker-compose foundation: Odoo 18 + Postgres 16 + pgvector, OCA helpdesk_mgmt | Shipped |
+| 2 | Custom addon scaffold + simple "Draft reply" ticket action using Groq | Shipped |
+| 3 | Full support agent with tool use + pgvector RAG + audit log | Shipped |
 | 4 | Terraform module for AWS, end-to-end deploy | Pending |
 | 5 | Terraform modules for Azure and DigitalOcean, portability smoke test | Pending |
 | 6 | Oracle Cloud Always Free deployment, live demo URL, walkthrough video | Pending |
