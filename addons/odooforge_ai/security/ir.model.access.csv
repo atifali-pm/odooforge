@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_kb_article_user,kb.article user,model_kb_article,base.group_user,1,0,0,0
+access_kb_article_manager,kb.article manager,model_kb_article,base.group_system,1,1,1,1
+access_audit_log_user,odooforge_ai.audit_log user,model_odooforge_ai_audit_log,base.group_user,1,0,0,0
+access_audit_log_manager,odooforge_ai.audit_log manager,model_odooforge_ai_audit_log,base.group_system,1,1,1,1

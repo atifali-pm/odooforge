@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_odooforge_ai_root"
+              name="AI Support"
+              sequence="65"
+              web_icon="odooforge_ai,static/description/icon.png"/>
+
+    <menuitem id="menu_odooforge_ai_kb"
+              name="Knowledge Base"
+              parent="menu_odooforge_ai_root"
+              action="kb_article_action"
+              sequence="10"/>
+
+    <menuitem id="menu_odooforge_ai_audit"
+              name="Audit Log"
+              parent="menu_odooforge_ai_root"
+              action="audit_log_action"
+              sequence="20"/>
+
+</odoo>

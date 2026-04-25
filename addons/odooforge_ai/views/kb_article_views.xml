@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="kb_article_view_list" model="ir.ui.view">
+        <field name="name">kb.article.list</field>
+        <field name="model">kb.article</field>
+        <field name="arch" type="xml">
+            <list string="Knowledge Base">
+                <field name="name"/>
+                <field name="tags"/>
+                <field name="last_embedded_at"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="kb_article_view_form" model="ir.ui.view">
+        <field name="name">kb.article.form</field>
+        <field name="model">kb.article</field>
+        <field name="arch" type="xml">
+            <form string="Knowledge Base Article">
+                <header>
+                    <button name="action_reembed"
+                            string="Re-embed"
+                            type="object"
+                            class="btn-secondary"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Title"/>
+                        <h1><field name="name" placeholder="Article title"/></h1>
+                    </div>
+                    <group>
+                        <field name="tags" placeholder="returns,policy,shipping"/>
+                        <field name="last_embedded_at" readonly="1"/>
+                        <field name="active"/>
+                    </group>
+                    <separator string="Body"/>
+                    <field name="body" widget="html"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="kb_article_action" model="ir.actions.act_window">
+        <field name="name">Knowledge Base</field>
+        <field name="res_model">kb.article</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add your first knowledge base article</p>
+            <p>Articles here are embedded with pgvector and surfaced by the AI agent's <code>search_kb</code> tool.</p>
+        </field>
+    </record>
+
+</odoo>

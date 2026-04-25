@@ -1,17 +1,25 @@
 {
     "name": "OdooForge AI",
-    "summary": "AI-powered customer support agent for Odoo Helpdesk",
-    "version": "18.0.1.0.0",
+    "summary": "Tool-using AI support agent with pgvector RAG and audit log",
+    "version": "18.0.2.0.0",
     "license": "Other OSI approved licence",
     "author": "Atif Ali",
     "website": "https://github.com/atifali-pm/odooforge",
     "category": "Productivity",
     "depends": ["base", "mail", "helpdesk_mgmt"],
-    "external_dependencies": {"python": ["requests"]},
+    "external_dependencies": {"python": ["requests", "fastembed"]},
     "data": [
+        "security/ir.model.access.csv",
+        "views/kb_article_views.xml",
+        "views/audit_log_views.xml",
+        "views/menus.xml",
         "views/res_config_settings_views.xml",
         "views/helpdesk_ticket_views.xml",
     ],
+    "demo": [
+        "data/kb_demo_data.xml",
+    ],
+    "post_init_hook": "post_init_hook",
     "application": True,
     "installable": True,
 }

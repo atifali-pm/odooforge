@@ -11,8 +11,24 @@
                      string="AI Support Agent"
                      name="odooforge_ai"
                      logo="/odooforge_ai/static/description/icon.png">
-                    <block title="LLM Provider"
-                           name="odooforge_ai_provider_block">
+
+                    <block title="Active provider"
+                           name="odooforge_ai_provider_select_block">
+                        <setting id="odooforge_ai_provider"
+                                 string="LLM Provider"
+                                 help="Which provider the support agent uses for chat completions">
+                            <field name="odooforge_ai_provider"/>
+                        </setting>
+                        <setting id="odooforge_ai_embedding_model"
+                                 string="Embedding Model"
+                                 help="fastembed-supported model name. Default produces 384-dim vectors. Re-embed all KB articles after changing.">
+                            <field name="odooforge_ai_embedding_model"
+                                   placeholder="BAAI/bge-small-en-v1.5"/>
+                        </setting>
+                    </block>
+
+                    <block title="Groq (free tier)"
+                           name="odooforge_ai_groq_block">
                         <setting id="odooforge_ai_groq_api_key"
                                  string="Groq API Key"
                                  help="Free tier API key from console.groq.com">
@@ -27,6 +43,38 @@
                                    placeholder="llama-3.3-70b-versatile"/>
                         </setting>
                     </block>
+
+                    <block title="Anthropic Claude"
+                           name="odooforge_ai_claude_block">
+                        <setting id="odooforge_ai_claude_api_key"
+                                 string="Anthropic API Key"
+                                 help="Get one at console.anthropic.com">
+                            <field name="odooforge_ai_claude_api_key"
+                                   password="True"
+                                   placeholder="sk-ant-..."/>
+                        </setting>
+                        <setting id="odooforge_ai_claude_model"
+                                 string="Claude Model">
+                            <field name="odooforge_ai_claude_model"
+                                   placeholder="claude-sonnet-4-5"/>
+                        </setting>
+                    </block>
+
+                    <block title="Ollama (self-hosted)"
+                           name="odooforge_ai_ollama_block">
+                        <setting id="odooforge_ai_ollama_base_url"
+                                 string="Ollama Base URL"
+                                 help="From inside the Odoo container, host.docker.internal points to the host">
+                            <field name="odooforge_ai_ollama_base_url"
+                                   placeholder="http://host.docker.internal:11434"/>
+                        </setting>
+                        <setting id="odooforge_ai_ollama_model"
+                                 string="Ollama Model">
+                            <field name="odooforge_ai_ollama_model"
+                                   placeholder="llama3.1:8b"/>
+                        </setting>
+                    </block>
+
                 </app>
             </xpath>
         </field>

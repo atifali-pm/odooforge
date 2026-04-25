@@ -18,7 +18,10 @@ services:
     restart: unless-stopped
 
   odoo:
-    image: odoo:18
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: odooforge/odoo:18
     container_name: odooforge-odoo
     depends_on:
       db:

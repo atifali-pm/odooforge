@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="audit_log_view_list" model="ir.ui.view">
+        <field name="name">odooforge_ai.audit_log.list</field>
+        <field name="model">odooforge_ai.audit_log</field>
+        <field name="arch" type="xml">
+            <list string="AI Agent Audit Log" decoration-success="outcome=='success'"
+                  decoration-warning="outcome=='no_reply'"
+                  decoration-danger="outcome=='error'">
+                <field name="create_date" string="When"/>
+                <field name="ticket_id"/>
+                <field name="provider"/>
+                <field name="model"/>
+                <field name="iterations"/>
+                <field name="input_tokens"/>
+                <field name="output_tokens"/>
+                <field name="latency_ms"/>
+                <field name="outcome"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="audit_log_view_search" model="ir.ui.view">
+        <field name="name">odooforge_ai.audit_log.search</field>
+        <field name="model">odooforge_ai.audit_log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="ticket_id"/>
+                <field name="provider"/>
+                <field name="model"/>
+                <filter string="Success" name="filter_success" domain="[('outcome','=','success')]"/>
+                <filter string="Errors" name="filter_error" domain="[('outcome','=','error')]"/>
+                <filter string="No Reply" name="filter_no_reply" domain="[('outcome','=','no_reply')]"/>
+                <separator/>
+                <filter string="Groq" name="filter_groq" domain="[('provider','=','groq')]"/>
+                <filter string="Claude" name="filter_claude" domain="[('provider','=','claude')]"/>
+                <filter string="Ollama" name="filter_ollama" domain="[('provider','=','ollama')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Provider" name="group_provider" context="{'group_by':'provider'}"/>
+                    <filter string="Outcome" name="group_outcome" context="{'group_by':'outcome'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="audit_log_view_form" model="ir.ui.view">
+        <field name="name">odooforge_ai.audit_log.form</field>
+        <field name="model">odooforge_ai.audit_log</field>
+        <field name="arch" type="xml">
+            <form string="AI Agent Audit Log Entry" create="false" edit="false">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="ticket_id"/>
+                            <field name="provider"/>
+                            <field name="model"/>
+                            <field name="outcome"/>
+                        </group>
+                        <group>
+                            <field name="iterations"/>
+                            <field name="input_tokens"/>
+                            <field name="output_tokens"/>
+                            <field name="latency_ms"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="User Prompt">
+                            <field name="user_prompt"/>
+                        </page>
+                        <page string="Final Reply">
+                            <field name="final_reply"/>
+                        </page>
+                        <page string="Tool Calls">
+                            <field name="tool_calls_json" widget="ace" options="{'mode':'json'}"/>
+                        </page>
+                        <page string="Error" invisible="outcome != 'error' and not error_message">
+                            <field name="error_message"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="audit_log_action" model="ir.actions.act_window">
+        <field name="name">AI Audit Log</field>
+        <field name="res_model">odooforge_ai.audit_log</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
